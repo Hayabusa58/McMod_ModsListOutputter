@@ -1,0 +1,13 @@
+# Eclipse
+.settings/
+bin/
+build/
+eclipse/
+.project
+.classpath
+
+# Gradle
+.gradle/
+
+# Remove Files
+*.txt

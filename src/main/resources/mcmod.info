@@ -1,0 +1,16 @@
+[
+{
+  "modid": "mcmod.tuyapin.net.ModsListOutputter",
+  "name": "ModsList Outputter",
+  "description": "Generated mods list that loaded by Minecraft Forge.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://tuyapin.net/minecraft/modslistoutputter",
+  "updateUrl": "",
+  "authorList": ["tuyapin"],
+  "credits": "tuyapin",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
