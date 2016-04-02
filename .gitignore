@@ -9,5 +9,4 @@ eclipse/
 # Gradle
 .gradle/
 
-# Remove Files
-*.txt
+
