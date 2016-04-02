@@ -1,14 +1,14 @@
 [
 {
-  "modid": "mcmod.tuyapin.net.ModsListOutputter",
+  "modid": "me.peregrine.modslistoutputter",
   "name": "ModsList Outputter",
   "description": "Generated mods list that loaded by Minecraft Forge.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "http://tuyapin.net/minecraft/modslistoutputter",
+  "url": "http://peregrine.me",
   "updateUrl": "",
-  "authorList": ["tuyapin"],
-  "credits": "tuyapin",
+  "authorList": ["Hayabusa"],
+  "credits": "Hayabusa","MincraftForge",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
