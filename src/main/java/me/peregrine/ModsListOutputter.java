@@ -19,29 +19,43 @@ import net.minecraftforge.common.config.Configuration;
 @Mod(name="ModsList Outputter", modid = "me.peregrine.modslistoutputter", version = "MC1.7.x_1.0a")
 public class ModsListOutputter
 {
+	public boolean isActive = true;
     public String format = "{id}({name}:{version}[{displayVersion}]):{source}";
     public boolean isActivatedOnly = false;
 
     @EventHandler
     public void preLoad(FMLPreInitializationEvent event)
     {
-        Configuration configuration = new Configuration(event.getSuggestedConfigurationFile());
-        configuration.load();
+    	Configuration configuration = new Configuration(event.getSuggestedConfigurationFile());
+        try {
 
-        this.format = configuration.getString("format", "mods", this.format, "Output format");
-        this.isActivatedOnly = configuration.getBoolean("isActivatedOnly", "mods", this.isActivatedOnly, "Write only Active Mods.");
+			configuration.load();
 
-        configuration.save();
+			System.out.println("コンフィグ読み込み");
+			this.isActive = configuration.getBoolean("isActive", "General", this.isActive, "Whether this mod is valid.");
+			this.format = configuration.getString("format", "Style", this.format, "Output format");
+			this.isActivatedOnly = configuration.getBoolean("isActivatedOnly", "General", this.isActivatedOnly,
+					"Write only Active Mods.");
+
+		} finally {
+			configuration.save();
+			System.out.println("コンフィグセーブ");
+		}
     }
 
     @EventHandler
     public void postLoad(FMLPostInitializationEvent event)
     {
+
+    if(isActive)
+    {
+    	System.out.println("アクティブだった");
+    	StringBuilder sb = new StringBuilder();
         List<ModContainer> mods = Loader.instance().getModList();
         if(this.isActivatedOnly)
             mods = Loader.instance().getActiveModList();
 
-        StringBuilder sb = new StringBuilder();
+
         for(ModContainer mod : mods)
         {
             String buf = this.format;
@@ -53,9 +67,12 @@ public class ModsListOutputter
             sb.append(buf);
             sb.append("\n");
         }
+    
 
         try
         {
+        	System.out.println("アクティブだった2");
+        	//StringBuilder sb2 = new StringBuilder();
             File file = new File(Minecraft.getMinecraft().mcDataDir, "mods/ModsList.txt");
             FileOutputStream fos = new FileOutputStream(file);
             PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(fos, "UTF-8")));
@@ -64,5 +81,6 @@ public class ModsListOutputter
             fos.close();
         }
         catch (Exception e){}
+    }
     }
 }
