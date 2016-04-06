@@ -14,51 +14,33 @@ import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.config.Configuration;
 
-@Mod(name="ModsList Outputter", modid = "me.peregrine.modslistoutputter", version = "MC1.7.x_1.0a")
+@Mod(name = "ModsList Outputter", modid = "me.peregrine.modslistoutputter", version = "MC1.7.x_1.0a")
 public class ModsListOutputter
 {
-	public boolean isActive = true;
-    public String format = "{id}({name}:{version}[{displayVersion}]):{source}";
-    public boolean isActivatedOnly = false;
-
     @EventHandler
     public void preLoad(FMLPreInitializationEvent event)
     {
-    	Configuration configuration = new Configuration(event.getSuggestedConfigurationFile());
-        try {
+    	MLOConfig.preLoad(event.getSuggestedConfigurationFile());
 
-			configuration.load();
-
-			System.out.println("コンフィグ読み込み");
-			this.isActive = configuration.getBoolean("isActive", "General", this.isActive, "Whether this mod is valid.");
-			this.format = configuration.getString("format", "Style", this.format, "Output format");
-			this.isActivatedOnly = configuration.getBoolean("isActivatedOnly", "General", this.isActivatedOnly,
-					"Write only Active Mods.");
-
-		} finally {
-			configuration.save();
-			System.out.println("コンフィグセーブ");
-		}
     }
 
     @EventHandler
     public void postLoad(FMLPostInitializationEvent event)
     {
 
-    if(isActive)
+    if(MLOConfig.isActive)
     {
     	System.out.println("アクティブだった");
     	StringBuilder sb = new StringBuilder();
         List<ModContainer> mods = Loader.instance().getModList();
-        if(this.isActivatedOnly)
+        if(MLOConfig.isActivatedOnly)
             mods = Loader.instance().getActiveModList();
 
 
         for(ModContainer mod : mods)
         {
-            String buf = this.format;
+            String buf = MLOConfig.format;
             buf = buf.replace("{id}", mod.getModId());
             buf = buf.replace("{name}", mod.getName());
             buf = buf.replace("{version}", mod.getVersion());
@@ -67,7 +49,7 @@ public class ModsListOutputter
             sb.append(buf);
             sb.append("\n");
         }
-    
+
 
         try
         {
@@ -80,7 +62,9 @@ public class ModsListOutputter
             pw.close();
             fos.close();
         }
-        catch (Exception e){}
+        catch (Exception e){
+
+        }
     }
     }
 }
