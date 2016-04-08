@@ -3,6 +3,7 @@ package me.peregrine;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
@@ -18,30 +19,48 @@ import net.minecraft.client.Minecraft;
 @Mod(name = "ModsList Outputter", modid = "me.peregrine.modslistoutputter", version = "MC1.7.x_1.0a")
 public class ModsListOutputter
 {
-    @EventHandler
+	public static boolean isIDFound = false;
+
+	@EventHandler
     public void preLoad(FMLPreInitializationEvent event)
     {
     	MLOConfig.preLoad(event.getSuggestedConfigurationFile());
+    	  //throw new MLOMissingIDException("");
+    	try {
+			this.ChangeConfigName();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
     }
+
+
+
+
+
+
 
     @EventHandler
     public void postLoad(FMLPostInitializationEvent event)
     {
+
+
 
     if(MLOConfig.isActive)
     {
     	System.out.println("アクティブだった");
     	StringBuilder sb = new StringBuilder();
         List<ModContainer> mods = Loader.instance().getModList();
-        if(MLOConfig.isActivatedOnly)
-            mods = Loader.instance().getActiveModList();
 
+        if(MLOConfig.isActivatedOnly)
+        {
+            mods = Loader.instance().getActiveModList();
+        }
 
         for(ModContainer mod : mods)
         {
             String buf = MLOConfig.format;
-            buf = buf.replace("{id}", mod.getModId());
+            buf = buf.replace("{modid}", mod.getModId());
             buf = buf.replace("{name}", mod.getName());
             buf = buf.replace("{version}", mod.getVersion());
             buf = buf.replace("{displayVersion}", mod.getDisplayVersion());
@@ -64,7 +83,17 @@ public class ModsListOutputter
         }
         catch (Exception e){
 
+
+
         }
     }
     }
+    public static void ChangeConfigName() throws IOException
+    {
+    	File oldcfg = new File(Minecraft.getMinecraft().mcDataDir, "/config/me.peregrine.modslistoutputter.cfg");
+    	File newcfg = new File(Minecraft.getMinecraft().mcDataDir, "/config/ModsListOutPutter.cfg");
+    if(oldcfg.exists())
+    	oldcfg.renameTo(newcfg);
+    }
+
 }
