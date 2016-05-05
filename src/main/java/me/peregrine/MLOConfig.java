@@ -8,7 +8,7 @@ import net.minecraftforge.common.config.Configuration;
 public class MLOConfig {
 
 	public static boolean isactive = true;
-    public static String format = "Modid:{modid} Modname:{name} Modversion:{version}[{displayVersion}] Filename:{source}";
+    public static String format = "id:{modid}, name:{name}, ver:{version}[{displayVersion}], @{source}";
     public static String listdir;
     public static boolean isactivatedonly = false;
     public static boolean isBBCodemodeactive = false;
