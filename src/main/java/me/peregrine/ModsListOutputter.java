@@ -21,7 +21,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
  * @auther Hayabusa
  *
  */
-@Mod(name = "ModsList Outputter", modid = "me.peregrine.modslistoutputter", version = "MC1.7.x_1.0a")
+@Mod(name = "ModsList Outputter", modid = "me.peregrine.modslistoutputter", version = "MC1.7.x_1.1.0")
 public class ModsListOutputter
 {
 	@Instance("me.peregrine.modslistoutputter")
