@@ -17,9 +17,11 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.0"
-group= "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "modid"
+version = "1.7.x_1.1.0"
+tasks.withType(Jar) {compileJava.options.encoding = 'UTF-8'}
+tasks.withType(Jar) {compileApiJava.options.encoding = 'UTF-8'}
+group= "me.peregrine.modslistoutputter" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "ModsListOutPutter"
 
 minecraft {
     version = "1.7.10-10.13.4.1558-1.7.10"
@@ -60,4 +62,11 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+tasks.withType(Jar) {
+    compileJava.options.encoding = 'UTF-8'
+}
+
+tasks.withType(Jar) {
+    compileApiJava.options.encoding = 'UTF-8'
 }
